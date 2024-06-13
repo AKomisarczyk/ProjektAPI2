@@ -1,0 +1,336 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Wymiana Waluty</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            color: #333;
+        }
+
+        .container {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin: 20px;
+            width: 300px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #4CAF50;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .section {
+            margin: 20px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+            button:hover {
+                background-color: #45a049;
+            }
+
+        input[type="text"], input[type="password"], input[type="number"], select {
+            width: calc(100% - 20px); 
+            padding: 10px;
+            margin: 10px auto; 
+            display: block; 
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        #exchange-rates-result {
+            text-align: left;
+            background-color: #f9f9f9;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+    </style>
+    <script>
+        async function register() {
+            const username = document.getElementById('register-username').value;
+            const password = document.getElementById('register-password').value;
+
+            const response = await fetch('/api/AutentKontroler/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, password })
+            });
+
+            const result = await response.json();
+            alert(result.message);
+        }
+
+        async function login() {
+            const username = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
+
+            const response = await fetch('/api/AutentKontroler/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, password })
+            });
+
+            const result = await response.json();
+            if (response.ok) {
+                localStorage.setItem('token', result.token);
+                localStorage.setItem('username', username);
+                alert('Login successful');
+                showBalanceAndDepositSections();
+                hideLoginAndRegister();
+            } else {
+                alert(result.message);
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('username');
+            alert('Logout successful');
+            document.getElementById('balance-section').style.display = 'none';
+            document.getElementById('deposit-section').style.display = 'none';
+            document.getElementById('exchange-section').style.display = 'none';
+            document.getElementById('logout-button').style.display = 'none';
+            document.getElementById('currency-balances').style.display = 'none';
+            showLoginAndRegister();
+        }
+
+        async function getBalance() {
+            const username = localStorage.getItem('username');
+            const token = localStorage.getItem('token');
+
+            const response = await fetch(`/api/AutentKontroler/balance?username=${username}`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            const result = await response.json();
+            if (response.ok) {
+                document.getElementById('balance-amount').innerText = result.balance;
+            } else {
+                alert(result.message);
+            }
+        }
+
+        async function deposit() {
+            const username = localStorage.getItem('username');
+            const token = localStorage.getItem('token');
+            const amount = parseFloat(document.getElementById('deposit-amount').value);
+
+            const response = await fetch('/api/AutentKontroler/deposit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({ username, amount })
+            });
+
+            const result = await response.json();
+            alert(result.message);
+            if (response.ok) {
+                getBalance();
+            }
+        }
+
+        async function exchange() {
+            const username = localStorage.getItem('username');
+            const token = localStorage.getItem('token');
+            const amount = parseFloat(document.getElementById('exchange-amount').value);
+            const currency = document.getElementById('currency-select').value;
+
+            const response = await fetch('/api/AutentKontroler/exchange', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({ username, amount, currency })
+            });
+
+            const result = await response.json();
+            alert(result.message);
+            if (response.ok) {
+                getBalance();
+                getCurrencyBalances();
+            }
+        }
+
+        async function getExchangeRates() {
+            const token = localStorage.getItem('token');
+            const response = await fetch('/api/WalutKontroler/exchange-rates', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            const result = await response.json();
+            if (response.ok) {
+                displayExchangeRates(result);
+                populateCurrencySelect(result);
+            } else {
+                alert(result.message);
+            }
+        }
+
+        function displayExchangeRates(rates) {
+            const resultDiv = document.getElementById('exchange-rates-result');
+            resultDiv.innerHTML = '';
+
+            rates.forEach(rate => {
+                const rateDiv = document.createElement('div');
+                rateDiv.innerText = `${rate.currency} (${rate.code}): ${rate.mid}`;
+                resultDiv.appendChild(rateDiv);
+            });
+        }
+
+        function populateCurrencySelect(rates) {
+            const select = document.getElementById('currency-select');
+            select.innerHTML = '';
+
+            rates.forEach(rate => {
+                const option = document.createElement('option');
+                option.value = rate.code;
+                option.text = `${rate.currency} (${rate.code})`;
+                select.appendChild(option);
+            });
+        }
+
+        function showBalanceAndDepositSections() {
+            document.getElementById('balance-section').style.display = 'block';
+            document.getElementById('deposit-section').style.display = 'block';
+            document.getElementById('exchange-section').style.display = 'block';
+            document.getElementById('logout-button').style.display = 'block';
+            document.getElementById('currency-balances').style.display = 'block';
+            getBalance();
+            getExchangeRates();
+            getCurrencyBalances();
+        }
+
+        async function getCurrencyBalances() {
+            const username = localStorage.getItem('username');
+            const token = localStorage.getItem('token');
+
+            const response = await fetch(`/api/AutentKontroler/currency-balances?username=${username}`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            const result = await response.json();
+            if (response.ok) {
+                displayCurrencyBalances(result);
+            } else {
+                alert(result.message);
+            }
+        }
+
+        function displayCurrencyBalances(balances) {
+            const balancesDiv = document.getElementById('currency-balances');
+            balancesDiv.innerHTML = '';
+
+            balances.forEach(balance => {
+                const balanceDiv = document.createElement('div');
+                balanceDiv.innerText = `Saldo: ${balance.amount.toFixed(2)} ${balance.currency}`;
+                balancesDiv.appendChild(balanceDiv);
+            });
+        }
+
+        function hideLoginAndRegister() {
+            document.getElementById('login-section').style.display = 'none';
+            document.getElementById('register-section').style.display = 'none';
+        }
+
+        function showLoginAndRegister() {
+            document.getElementById('login-section').style.display = 'block';
+            document.getElementById('register-section').style.display = 'block';
+        }
+
+        window.onload = function () {
+            const token = localStorage.getItem('token');
+            if (token) {
+                showBalanceAndDepositSections();
+                hideLoginAndRegister();
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Wymiana Waluty</h1>
+
+    <div id="login-section" class="container section">
+        <h2>Login</h2>
+        <input type="text" id="login-username" placeholder="Username">
+        <input type="password" id="login-password" placeholder="Password">
+        <button onclick="login()">Login</button>
+        <p id="login-message"></p>
+    </div>
+
+    <div id="register-section" class="container section">
+        <h2>Register</h2>
+        <input type="text" id="register-username" placeholder="Username">
+        <input type="password" id="register-password" placeholder="Password">
+        <button onclick="register()">Register</button>
+    </div>
+
+    <div id="balance-section" class="container section" style="display:none;">
+        <h2>Saldo</h2>
+        <p>Saldo: <span id="balance-amount">0</span> PLN</p>
+        <button onclick="getBalance()">Odśwież saldo</button>
+    </div>
+
+    <div id="deposit-section" class="container section" style="display:none;">
+        <h2>Wpłata</h2>
+        <input type="number" id="deposit-amount" placeholder="Kwota">
+        <button onclick="deposit()">Wpłać</button>
+    </div>
+
+    <div id="exchange-section" class="container section" style="display:none;">
+        <h2>Wymiana waluty</h2>
+        <input type="number" id="exchange-amount" placeholder="Kwota w PLN">
+        <select id="currency-select"></select>
+        <button onclick="exchange()">Wymień</button>
+    </div>
+
+    <div id="currency-balances" class="container section" style="display:none;">
+        <h2>Saldo w innych walutach</h2>
+    </div>
+
+    <div class="container section">
+        <h2>Get Exchange Rates</h2>
+        <button onclick="getExchangeRates()">Get Exchange Rates</button>
+        <div id="exchange-rates-result"></div>
+    </div>
+
+    <div class="container section" style="display:none;" id="logout-button">
+        <button onclick="logout()">Logout</button>
+    </div>
+</body>
+</html>
