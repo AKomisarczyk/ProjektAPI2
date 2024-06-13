@@ -1,0 +1,39 @@
+{
+  "Version": 1,
+  "Hash": "FfO3tmvjUlDVowL8TmVJS3RbZkmcjjzYdnmVIdv65P4=",
+  "Source": "WymianaWaluty",
+  "BasePath": "_content/WymianaWaluty",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "WymianaWaluty\\wwwroot",
+      "Source": "WymianaWaluty",
+      "ContentRoot": "D:\\Users\\Olek\\source\\repos\\WymianaWaluty\\wwwroot\\",
+      "BasePath": "_content/WymianaWaluty",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "D:\\Users\\Olek\\source\\repos\\WymianaWaluty\\wwwroot\\index.html",
+      "SourceId": "WymianaWaluty",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Users\\Olek\\source\\repos\\WymianaWaluty\\wwwroot\\",
+      "BasePath": "_content/WymianaWaluty",
+      "RelativePath": "index.html",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\index.html"
+    }
+  ]
+}

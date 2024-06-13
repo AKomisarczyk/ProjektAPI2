@@ -1,0 +1,219 @@
+[
+  {
+    "ContainingType": "WymianaWaluty.Kontrolery.AutentKontroler",
+    "Method": "GetBalance",
+    "RelativePath": "api/AutentKontroler/balance",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "username",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WymianaWaluty.Kontrolery.AutentKontroler",
+    "Method": "GetCurrencyBalances",
+    "RelativePath": "api/AutentKontroler/currency-balances",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "username",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WymianaWaluty.Kontrolery.AutentKontroler",
+    "Method": "Deposit",
+    "RelativePath": "api/AutentKontroler/deposit",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "WymianaWaluty.Modele.DepositRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WymianaWaluty.Kontrolery.AutentKontroler",
+    "Method": "Exchange",
+    "RelativePath": "api/AutentKontroler/exchange",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "WymianaWaluty.Modele.ExchangeRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WymianaWaluty.Kontrolery.AutentKontroler",
+    "Method": "Login",
+    "RelativePath": "api/AutentKontroler/login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Transf.LoginRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WymianaWaluty.Kontrolery.AutentKontroler",
+    "Method": "Register",
+    "RelativePath": "api/AutentKontroler/register",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Transf.RegisterRqs",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WymianaWaluty.Kontrolery.TransakcjeKontroler",
+    "Method": "GetTransactions",
+    "RelativePath": "api/TransakcjeKontroler",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WymianaWaluty.Kontrolery.TransakcjeKontroler",
+    "Method": "CreateTransaction",
+    "RelativePath": "api/TransakcjeKontroler",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Transf.TransakcjaR",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WymianaWaluty.Kontrolery.TransakcjeKontroler",
+    "Method": "GetTransactionById",
+    "RelativePath": "api/TransakcjeKontroler/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WymianaWaluty.Kontrolery.TransakcjeKontroler",
+    "Method": "UpdateTransaction",
+    "RelativePath": "api/TransakcjeKontroler/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "request",
+        "Type": "Transf.TransakcjaR",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WymianaWaluty.Kontrolery.TransakcjeKontroler",
+    "Method": "DeleteTransaction",
+    "RelativePath": "api/TransakcjeKontroler/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WymianaWaluty.Kontrolery.TransakcjeKontroler",
+    "Method": "ProcessPayment",
+    "RelativePath": "api/TransakcjeKontroler/process-payment",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Transf.PaymentRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WymianaWaluty.Kontrolery.WalutKontroler",
+    "Method": "ConvertCurrency",
+    "RelativePath": "api/WalutKontroler/convert",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "WymianaWaluty.Kontrolery.ConversionRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WymianaWaluty.Kontrolery.WalutKontroler",
+    "Method": "GetExchangeRates",
+    "RelativePath": "api/WalutKontroler/exchange-rates",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  }
+]

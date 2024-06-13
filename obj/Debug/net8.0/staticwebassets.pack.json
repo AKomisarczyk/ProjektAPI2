@@ -1,0 +1,25 @@
+{
+  "Files": [
+    {
+      "Id": "D:\\Users\\Olek\\source\\repos\\WymianaWaluty\\wwwroot\\index.html",
+      "PackagePath": "staticwebassets\\index.html"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.WymianaWaluty.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.WymianaWaluty.props",
+      "PackagePath": "build\\WymianaWaluty.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.WymianaWaluty.props",
+      "PackagePath": "buildMultiTargeting\\WymianaWaluty.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.WymianaWaluty.props",
+      "PackagePath": "buildTransitive\\WymianaWaluty.props"
+    }
+  ],
+  "ElementsToRemove": []
+}
